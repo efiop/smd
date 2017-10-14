@@ -6,7 +6,7 @@ TARGET_BIN = smd
 SRCS	+= main.c
 OBJS	= $(SRCS:.c=.o)
 
-.PHONY: all clean run run-docker
+.PHONY: all clean test test-docker
 
 all: $(TARGET_BIN)
 
@@ -25,7 +25,7 @@ test: $(TARGET_BIN)
 	./smd client
 
 test-docker:
-	echo "WARNING: THIS WILL USE UPSTREAM GIT REPO, NOT YOUR LOCAL ONE"
+	echo -e "\e[31m\nWARNING: THIS WILL USE UPSTREAM GIT REPO, NOT YOUR LOCAL ONE\n\e[0m"
 	docker build -t centos7:smd-server docker/smd/centos7/smd-server
 	docker build -t centos7:smd-client docker/smd/centos7/smd-client
 	docker run --detach -v $$(pwd):/smd -w /smd centos:latest bash -c '/smd/smd server' > server.sha
